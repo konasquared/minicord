@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
+from .gateway import GatewayHandler, GatewayOpcode, Intents
 from typing import Any
 
 import httpx
@@ -8,9 +9,8 @@ import httpx
 
 @dataclass(slots=True)
 class MinicordClient:
-    """Very small Discord REST client.
-
-    This is intentionally minimal and intended as a starter for extension.
+    """
+    
     """
 
     token: str
@@ -30,6 +30,7 @@ class MinicordClient:
         response.raise_for_status()
         return response.json()
 
-    def get_gateway_bot(self) -> dict[str, Any]:
-        """Return metadata for connecting to Discord Gateway."""
-        return self._request("GET", "/gateway/bot")
+    def connect(self, intents: Intents) -> GatewayHandler:
+        gateway_info = self._request("GET", "/gateway/bot")
+        gateway_url = gateway_info["url"]
+        return GatewayHandler(token=self.token, intents=intents, gateway_url=gateway_url)

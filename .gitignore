@@ -16,5 +16,12 @@ __pycache__/
 .vscode/
 .DS_Store
 
+# Builds
+build/
+dist/
+
 # uv lockfile (commit this if you want reproducible envs)
 # uv.lock
+
+# Secrets
+.env
