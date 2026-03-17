@@ -10,7 +10,8 @@ import httpx
 @dataclass(slots=True)
 class MinicordClient:
     """
-    
+    Minimal Discord API client that can connect to the gateway and send REST requests.
+    Minicord intends to primarily be used with Python 3.13+ freethreaded builds.
     """
 
     token: str
@@ -33,4 +34,6 @@ class MinicordClient:
     def connect(self, intents: Intents) -> GatewayHandler:
         gateway_info = self._request("GET", "/gateway/bot")
         gateway_url = gateway_info["url"]
-        return GatewayHandler(token=self.token, intents=intents, gateway_url=gateway_url)
+        gateway_handler = GatewayHandler(token=self.token, intents=intents, gateway_url=gateway_url)
+        gateway_handler.connect()
+        return gateway_handler
