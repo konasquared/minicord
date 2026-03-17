@@ -1,0 +1,32 @@
+[build-system]
+requires = ["hatchling>=1.25.0"]
+build-backend = "hatchling.build"
+
+[project]
+name = "minicord"
+version = "0.1.0"
+description = "Minimal Discord REST API library with a uv-first workflow"
+readme = "README.md"
+requires-python = ">=3.13"
+license = { text = "MIT" }
+authors = [{ name = "minicord contributors" }]
+dependencies = [
+  "httpx>=0.28,<0.29",
+]
+
+[dependency-groups]
+dev = [
+  "pytest>=8.3,<9",
+]
+
+[tool.uv]
+default-groups = ["dev"]
+
+[tool.pytest.ini_options]
+pythonpath = ["src"]
+addopts = "-q"
+
+testpaths = ["tests"]
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/minicord"]
